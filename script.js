@@ -552,3 +552,23 @@ function saveEmailFromModal() {
     
     document.getElementById('emailCaptureModal').style.display = 'none';
 }
+
+// --- CATEGORY TAB FILTER CONTROLS ---
+function filterCategory(targetCategory, selectedButton) {
+    // 1. Swap active style class between elements smoothly
+    document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
+    selectedButton.classList.add('active');
+
+    // 2. Animate and toggle polaroid visibility
+    document.querySelectorAll('.polaroid').forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        
+        if (targetCategory === 'all' || cardCategory === targetCategory) {
+            card.style.display = 'flex';
+            card.style.opacity = '1';
+        } else {
+            card.style.opacity = '0';
+            card.style.display = 'none';
+        }
+    });
+}

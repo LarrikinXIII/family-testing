@@ -376,6 +376,41 @@ footer a { text-decoration: none; color: #4c5d7a; }
     padding: 14px;
 }
 
+/* --- THE CATEGORY TABS WRAPPER --- */
+.category-tabs-container {
+    display: flex;
+    gap: 6px;
+    margin: 0 auto 30px auto;
+    background: rgba(5, 43, 125, 0.05); /* Soft premium tint */
+    padding: 6px;
+    border-radius: 5px; /* Forces round pill-shape background container */
+    width: fit-content;
+    box-sizing: border-box;
+    z-index: 10;
+    position: relative;
+}
+
+/* --- THE PILL NAVIGATION TABS --- */
+.category-tab {
+    padding: 8px 20px;
+    border: none;
+    background: transparent;
+    color: #52627f;
+    font-weight: 600;
+    font-size: 13px;
+    font-family: inherit;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.5px;
+}
+
+/* --- THE ACTIVE INTERACTIVE STATE TRACK --- */
+.category-tab.active {
+    background: #ffffff;
+    color: #1d2740;
+    box-shadow: 0 4px 12px rgba(5, 43, 125, 0.08); /* Lifted look */
+}
 
 /* ==========================================================================
    6. RESPONSIVE MEDIA QUERIES (MOBILE BREAKPOINTS)

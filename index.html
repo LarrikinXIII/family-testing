@@ -41,6 +41,12 @@
 <main class="container">
     <!-- This is your new placeholder section -->
     <div class="polaroid-section">
+        <div class="category-tabs-container">
+    <button type="button" class="category-tab active" onclick="filterCategory('all', this)">ALL</button>
+    <button type="button" class="category-tab" onclick="filterCategory('family', this)">FAMILY</button>
+    <button type="button" class="category-tab" onclick="filterCategory('couple', this)">COUPLE</button>
+    <button type="button" class="category-tab" onclick="filterCategory('solo', this)">SOLO</button>
+</div>
 <!-- 1. CART UI (COMPACT & BACKEND-SAFE VERSION) -->
 <div id="cart-banner">
     <div style="line-height:1.2">
@@ -130,8 +136,9 @@
 <!-- 3. THE DESK (Draggable Area) -->
 <div id="gallery-container">
 
-  <!-- ITEM 3: SOLO -->
+        <!-- ITEM 3: SOLO -->
         <div class="polaroid" 
+             data-category="solo" 
              data-title="Classic Portrait" 
              data-sku="SOLO-99" 
              data-members="Subject"
@@ -145,6 +152,7 @@
 
         <!-- ITEM 2: COUPLE 01-->
         <div class="polaroid" 
+             data-category="couple" 
              data-title="Silent Devotion" 
              data-sku="CPL-01" 
              data-members="Partner A,Partner B"
@@ -156,8 +164,9 @@
             </div>
         </div>
 
-         <!-- ITEM 2: COUPLE 02-->
+        <!-- ITEM 2: COUPLE 02-->
         <div class="polaroid" 
+             data-category="couple" 
              data-title="Regal Legacy" 
              data-sku="CPL-02" 
              data-members="Partner A,Partner B"
@@ -169,8 +178,9 @@
             </div>
         </div>
         
-                 <!-- ITEM 2: COUPLE 03-->
+        <!-- ITEM 2: COUPLE 03-->
         <div class="polaroid" 
+             data-category="couple" 
              data-title="Silent Devotion" 
              data-sku="CPL-03" 
              data-members="Partner A,Partner B"
@@ -182,13 +192,12 @@
             </div>
         </div>
         
-      
-
-    <!-- ITEM 1: FAMILY -->
+        <!-- ITEM 1: FAMILY -->
         <div class="polaroid" 
-             data-title="Blanket Joy" 
+             data-category="family" 
+             data-title="Blanket of Memories" 
              data-sku="FAM-001" 
-             data-members="Father,Mother,Child"
+             data-members="Father,Mother,Child1,Child2"
              data-prices="500,800,1500">
             <img src="https://i.postimg.cc/5N9DwNjk/C7434932-C655-4372-8345-EF609C1FF891.jpg" draggable="false">
             <div class="caption">
@@ -198,6 +207,7 @@
         </div>
 
 </div> <!-- This safely wraps up your #gallery-container elements -->
+
 
 </div>
 </main>
