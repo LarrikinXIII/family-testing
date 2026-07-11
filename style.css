@@ -534,6 +534,7 @@ footer a { text-decoration: none; color: #4c5d7a; }
         padding: 5px;
         text-align: center;
         bottom: 15px;
+        z-index: 50;
     }
 
     .checkout-btn { 
