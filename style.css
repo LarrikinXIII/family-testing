@@ -102,27 +102,41 @@ nav {
 /* --- 1. CORE ATMOSPHERE --- */
    
         /* --- 2. BOTTOM CART STRIP --- */
-        #cart-banner {
-            position: fixed;
-            bottom: 20px; left: 5%; width: 90%;
-            background: #052b7d; color: white;
-            padding: 12px 25px; border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            z-index: 9000;
-            display: flex; justify-content: space-between; align-items: center;
-            font-family: 'Segoe UI', sans-serif;
-            transform: translateY(150%); /* Hidden by default */
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #cart-banner.visible { transform: translateY(0); }
-        
-        .checkout-btn {
-            background: #fff; color: #052b7d; border: none;
-            padding: 10px 24px; border-radius: 20px;
-            font-weight: 700; font-size: 13px; cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .checkout-btn:active { transform: scale(0.95); }
+ /* --- 2. SUB-HEADER COMPACT CART STRIP --- */
+#cart-banner {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #052b7d; 
+    color: white;
+    padding: 12px 25px; 
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(5,43,125,0.12);
+    z-index: 9000;
+    
+    /* --- CRITICAL ORIGINAL FORCED INVISIBILITY GATE --- */
+    display: none !important; /* Forces it to be absolutely invisible on page load */
+}
+
+/* --- THE REVEAL CLASS FORCED BY ADD_TO_CART JAVASCRIPT --- */
+#cart-banner.visible { 
+    display: flex !important; /* Snaps instantly onto the screen only when item is added */
+    margin: 0 auto 20px auto;  /* Pushes your category tabs down cleanly */
+}
+
+.checkout-btn {
+    background: #fff; 
+    color: #052b7d; 
+    border: none;
+    padding: 10px 24px; 
+    border-radius: 20px;
+    font-weight: 700; 
+    font-size: 13px; 
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+.checkout-btn:active { transform: scale(0.95); }
 
         /* --- 3. THE POLAROID (Physical Object) --- */
         .polaroid {
