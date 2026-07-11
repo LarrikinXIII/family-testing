@@ -397,7 +397,7 @@ footer a { text-decoration: none; color: #4c5d7a; }
 .category-tabs-container {
     display: flex;
     gap: 6px;
-    margin: 0 auto 30px auto;
+    margin: 0 auto auto auto;
     background: rgba(5, 43, 125, 0.05); /* Soft premium tint */
     padding: 6px;
     border-radius: 5px; /* Forces round pill-shape background container */
@@ -442,9 +442,9 @@ footer a { text-decoration: none; color: #4c5d7a; }
 
 /* --- THE REVEAL STATE ACTIVATED BY THE CART VISIBLE CLASS --- */
 #cart-wrapper.visible {
-    height: 60px;       /* Expands smoothly to match the inner capsule size */
-    opacity: 1;         /* Fades in beautifully */
-    margin-bottom: 20px; /* Pushes the categories down cleanly */
+    height: auto; /* Reduced to match the slim single-row capsule height precisely */
+    opacity: 1;
+    margin-bottom: 5px; /* Tighter padding above the categories bar */
 }
 
 /* ==========================================================================
@@ -550,7 +550,7 @@ footer a { text-decoration: none; color: #4c5d7a; }
 
     /* --- FLOATING BOTTOM CART STRIP --- */
       #cart-wrapper.visible {
-        height: 120px; /* Gives extra sliding height space when inputs stack on mobile */
+        height: auto; /* Gives extra sliding height space when inputs stack on mobile */
     }
     #cart-banner {
         flex-direction: row;
