@@ -553,20 +553,57 @@ function saveEmailFromModal() {
     document.getElementById('emailCaptureModal').style.display = 'none';
 }
 
-// --- CATEGORY TAB FILTER CONTROLS ---
+// --- CATEGORY TAB FILTER CONTROLS (WITH AUTOMATIC SHUFFLE) ---
 function filterCategory(targetCategory, selectedButton) {
-    // 1. Swap active style class between elements smoothly
+    // 1. Swap active style class between tab elements smoothly
     document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
     selectedButton.classList.add('active');
 
-    // 2. Animate and toggle polaroid visibility
+    // 2. Locate your active board container
+    const board = document.getElementById('gallery-container');
+
+    // 3. Toggle visibility and dynamically re-scatter filtered elements
     document.querySelectorAll('.polaroid').forEach(card => {
         const cardCategory = card.getAttribute('data-category');
         
         if (targetCategory === 'all' || cardCategory === targetCategory) {
             card.style.display = 'flex';
             card.style.opacity = '1';
+
+            // --- THE LIVE SCATTER SHUFFLE LOGIC ---
+            // Calculates fresh boundaries based on your desk container dimensions
+            const maxX = (board ? board.offsetWidth : window.innerWidth) - 260;
+            const maxY = (board ? board.offsetHeight : window.innerHeight) - 300;
+            
+            const x = Math.max(10, Math.random() * maxX);
+            const y = Math.max(10, Math.random() * maxY);
+            const r = Math.random() * 20 - 10; // Fresh random rotation angle
+
+            // Update the card's tracking datasets so dragging still works perfectly
+            card.dataset.homeX = x;
+            card.dataset.homeY = y;
+            card.dataset.homeR = r;
+
+            // Sync the coordinates to the physics state engine
+            if (card._state) {
+                card._state.currentX = x;
+                card._state.currentY = y;
+                card._state.rotation = r;
+            }
+
+            // Fire an elegant, fluid CSS transition animation to shuffle them into place
+            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            setTransform(card, x, y, 1, r);
+            
+            // Clean up the transition property after animation completes so regular dragging stays instant
+            setTimeout(() => {
+                if (!card.classList.contains('active')) {
+                    card.style.transition = 'none';
+                }
+            }, 500);
+
         } else {
+            // Completely hide out-of-category card items from the screen grid mesh
             card.style.opacity = '0';
             card.style.display = 'none';
         }
