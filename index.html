@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ava Xin Family Portraits</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+<div class="container nav-wrapper">
+    <div class="logo">
+        <a href="../index.html">
+            <img src="logo.png" alt="Ava Xin Logo">
+            <span> </span>
+        </a>
+    </div>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger"><span>MENU</span> ☰</label>
+    <div class="menu">
+    <a href="../index.html">Home</a>
+    <a href="#" onclick="comingSoon(event)">Portfolio</a>
+    <a href="#" onclick="comingSoon(event)">Gallery</a>
+    <a href="../viral-prompts/index.html">Tools</a> 
+    <a href="../products/index.html">Products</a> 
+    <a href="../family-studio-canvas/index.html">Family Canvas</a>
+    <a href="../contact/index.html">Contact</a>
+    </div>
+
+    <a href="../contact/index.html" class="btn nav-btn">Get in Touch</a>
+</div>
+</nav>
+
+<!-- MAIN CONTENT AREA -->
+<main class="container">
+    <!-- This is your new placeholder section -->
+    <div class="polaroid-section">
+<!-- 1. CART UI (COMPACT & BACKEND-SAFE VERSION) -->
+<div id="cart-banner">
+    <div style="line-height:1.2">
+        <span style="font-size:11px; opacity:0.7; letter-spacing:1px">ESTIMATED TOTAL</span><br>
+        <span id="cart-total" style="font-size:18px; font-weight:700">₱0</span>
+    </div>
+
+    <!-- YOUR ORIGINAL INPUT: Retained exactly as-is so your working code never breaks. -->
+    <!-- We only hide it visually to prevent iOS layout shifting while typing. -->
+    <input 
+        type="email" 
+        id="customer-email" 
+        placeholder="Enter Email for Updated "
+        style="display: none;"
+    >
+
+    <!-- NEW BREATHABLE MOBILE COUPLING ACTION BUTTONS -->
+    <div style="display: flex; gap: 8px; align-items: center;">
+        <button type="button" id="email-trigger-btn" class="checkout-btn" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25);" onclick="openEmailModal()">
+            ENTER <br>EMAIL
+        </button>
+        <button class="checkout-btn" onclick="checkout()">
+            Confirm Order (<span id="cart-count">0</span>)
+        </button>
+    </div>
+</div>
+
+<!-- EMAIL INPUT CAPTURE POPUP MODAL (Keeps zoom isolated inside this frame card) -->
+<div id="emailCaptureModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card">
+    <h3>Complete Your Order</h3>
+    <p style="font-size: 13px; color: #52627f; margin: 10px 0 20px 0; line-height: 1.5;">Please enter your contact email address below to track your project file updates.</p>
+    
+    <input 
+        type="email" 
+        id="modal-email-field" 
+        placeholder="Enter your email"
+        style="width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; font-family: inherit; margin-bottom: 20px; box-sizing: border-box;"
+    >
+    
+    <button class="btn modal-btn" onclick="saveEmailFromModal()">Save & Continue</button>
+  </div>
+</div>
+
+<!-- 2. CONFIGURATOR MODAL -->
+<div id="order-overlay">
+    <div class="config-card">
+
+        <div class="config-header">
+            <div class="close-x" onclick="closeModal()">×</div>
+            <img id="conf-img" class="thumb-img" src="">
+            <div>
+                <h3 id="conf-title" style="margin:0; font-size:16px;">Product</h3>
+                <span id="conf-sku" style="font-size:12px; color:#888;">SKU-00</span>
+            </div>
+        </div>
+
+        <div class="config-body">
+
+            <!-- A. PRICE -->
+            <span class="section-title">1. Select Format</span>
+            <div class="tier-grid" id="tier-container"></div>
+
+            <!-- B. UPLOADS -->
+            <span class="section-title">2. Reference Photos</span>
+            <p style="font-size:11px; color:#666; margin-top:-8px; margin-bottom:15px; line-height:1.4">
+                Upload 2 clear photos per person for best results.
+            </p>
+            <div id="members-container"></div>
+
+            <!-- C. NOTES -->
+            <span class="section-title" style="margin-top:20px">3. Personal Note</span>
+            <textarea id="conf-note" rows="2" placeholder="Any special requests?..." 
+                style="width:100%; border:1px solid #ddd; padding:10px; box-sizing:border-box; font-family:inherit;">
+            </textarea>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="config-footer">
+            <button class="add-cart-btn" onclick="addToCart()">ADD TO CART</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- 3. THE DESK (Draggable Area) -->
+<div id="gallery-container">
+
+  <!-- ITEM 3: SOLO -->
+        <div class="polaroid" 
+             data-title="Classic Portrait" 
+             data-sku="SOLO-99" 
+             data-members="Subject"
+             data-prices="300,500,900">
+            <img src="https://picsum.photos/400/400?random=3" draggable="false">
+            <div class="caption">
+                <h3>Classic Portrait</h3>
+                <button class="customize-btn" onclick="openConfig(this, event)">CUSTOMIZE</button>
+            </div>
+        </div>
+
+        <!-- ITEM 2: COUPLE 01-->
+        <div class="polaroid" 
+             data-title="Silent Devotion" 
+             data-sku="CPL-01" 
+             data-members="Partner A,Partner B"
+             data-prices="90,150,300">
+            <img src="https://picsum.photos/300/400?random=2" draggable="false">
+            <div class="caption">
+                <h3>Timeless Duo</h3>
+                <button class="customize-btn" onclick="openConfig(this, event)">CUSTOMIZE</button>
+            </div>
+        </div>
+
+         <!-- ITEM 2: COUPLE 02-->
+        <div class="polaroid" 
+             data-title="Regal Legacy" 
+             data-sku="CPL-02" 
+             data-members="Partner A,Partner B"
+             data-prices="50,100,300">
+            <img src="https://i.postimg.cc/YqNjmjcv/911B89F6-BDA1-40CB-B22D-41612D58CDD3.png" draggable="false">
+            <div class="caption">
+                <h3>Regal Legacy</h3>
+                <button class="customize-btn" onclick="openConfig(this, event)">CUSTOMIZE</button>
+            </div>
+        </div>
+        
+                 <!-- ITEM 2: COUPLE 03-->
+        <div class="polaroid" 
+             data-title="Silent Devotion" 
+             data-sku="CPL-03" 
+             data-members="Partner A,Partner B"
+             data-prices="50,100,300">
+            <img src="https://i.postimg.cc/fRTmv1ht/8CF9BAD0-999D-4E34-AB97-30C13AE9E156.png" draggable="false">
+            <div class="caption">
+                <h3>Silent Devotion</h3>
+                <button class="customize-btn" onclick="openConfig(this, event)">CUSTOMIZE</button>
+            </div>
+        </div>
+        
+      
+
+    <!-- ITEM 1: FAMILY -->
+        <div class="polaroid" 
+             data-title="Blanket Joy" 
+             data-sku="FAM-001" 
+             data-members="Father,Mother,Child"
+             data-prices="500,800,1500">
+            <img src="https://i.postimg.cc/5N9DwNjk/C7434932-C655-4372-8345-EF609C1FF891.jpg" draggable="false">
+            <div class="caption">
+                <h3>The Royal Family</h3>
+                <button class="customize-btn" onclick="openConfig(this, event)">CUSTOMIZE</button>
+            </div>
+        </div>
+
+</div> <!-- This safely wraps up your #gallery-container elements -->
+
+</div>
+</main>
+
+ <!-- Safely closes the main container area -->
+
+
+<footer>
+<div class="container footer-grid">
+    <div>
+        <p>Developed by: Larrikin Manuel</p>
+    </div>
+    <div>
+        <div class="footer-title">Quick Links</div>
+        <ul>
+            <li><a href="https://xinavane.com">Home</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="products.html">Products</a></li>
+        </ul>
+    </div>
+    <div>
+        <div class="footer-title">Follow Me</div>
+        <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">TikTok</a></li>
+        </ul>
+    </div> 
+</div>
+<div class="copyright">
+    &copy; 2026 Ava Xin. All rights reserved.
+</div>
+</footer>
+
+<div id="comingSoonModal" class="modal-overlay">
+  <div class="modal-card">
+    <h3>Feature Arriving Soon</h3>
+    <p>We are currently building this section. Check back shortly!</p>
+    <!-- FIXED INLINE TARGET HIDES COHESIVELY WITH INTERNAL RULES -->
+    <button class="btn modal-btn" onclick="document.getElementById('comingSoonModal').style.display = 'none'">Got it</button>
+  </div>
+</div>
+
+<div id="emailErrorModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card">
+    <h3 style="color: #ff4757;">Invalid Email</h3>
+    <p style="font-size: 14px; color: #52627f; margin: 15px 0 25px 0;">Please enter a valid email address before confirming your order.</p>
+    <button class="btn modal-btn" onclick="document.getElementById('emailErrorModal').style.display = 'none'">OK</button>
+  </div>
+</div>
+
+<!-- LOADING PROGRESS OVERLAY -->
+<div id="loadingOverlay" class="modal-overlay" style="display: none;">
+  <div class="modal-card" style="max-width: 320px; padding: 30px;">
+    <h3 style="font-size: 20px; margin-bottom: 10px;">Processing Your Order</h3>
+    <p style="font-size: 13px; color: #52627f; margin-bottom: 20px;">Please hold on while we secure your workspace design...</p>
+    
+    <!-- Progress Bar Track -->
+    <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden; position: relative;">
+      <div id="loadingProgressBar" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.4s ease; border-radius: 10px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- KEEP YOUR ORIGINAL LOADING OVERLAY HERE -->
+<div id="loadingOverlay" class="modal-overlay" style="display: none;">
+  <!-- ... existing loading structure ... -->
+</div>
+
+<!-- PASTE THE NEW COMPLEMENTARY SUCCESS OVERLAY RIGHT HERE -->
+<div id="orderSuccessModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card" style="max-width: 400px; padding: 40px 30px;">
+    <div style="font-size: 48px; margin-bottom: 15px;">🎉</div>
+    <h3>Order Sent Successfully!</h3>
+    <p style="font-size: 14px; color: #52627f; margin: 15px 0 25px 0; line-height: 1.5;">
+      Your studio workspace design has been secured. We will review your reference photo files and contact you shortly at your provided email!
+    </p>
+    <button class="btn modal-btn" onclick="handleSuccessReset()">Start New Design</button>
+  </div>
+</div>
+
+<!-- PREMIUM SUCCESS COMPLETION MODAL -->
+<div id="orderSuccessModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card" style="max-width: 400px; padding: 40px 30px;">
+    <div style="font-size: 48px; margin-bottom: 15px;">🎉</div>
+    <h3>Order Sent Successfully!</h3>
+    <p style="font-size: 14px; color: #52627f; margin: 15px 0 25px 0; line-height: 1.5;">
+      Your studio workspace design has been secured. We will review your reference photo files and contact you shortly at your provided email!
+    </p>
+    <button class="btn modal-btn" onclick="handleSuccessReset()">Start New Design</button>
+  </div>
+</div>
+
+<!-- WELCOME MODAL (POPS UP ON LOAD) -->
+<div id="welcomeModal" class="modal-overlay" style="display: flex;">
+    <div class="modal-card" style="max-width: 460px;">
+        Welcome to<br> <h3>AVA XIN<br>Family Studio Canvas</h3>
+        
+        <p style="font-size: 14px; color: #52627f; line-height: 1.5; margin-bottom: 20px;">
+            INSTRUCTIONS:
+        </p>
+
+        <!-- PUNCHY STEP-BY-STEP INSTRUCTIONS -->
+        <ul style="list-style: none; text-align: left; font-size: 13px; color: #4c5d7a; margin-bottom: 25px; padding: 0;">
+            <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                🖐️ <strong>Click & Drag:</strong> Scatter and rearrange prints anywhere on the desk.
+            </li>
+            <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                🔍 <strong>Click to Zoom:</strong> Tap any photo to expand it to full center view.
+            </li>
+            <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                🤌 <strong>Scroll / Pinch:</strong> Zoom in or out to inspect the finest details.
+            </li>
+        </ul>
+
+        <!-- THE PSYCHOLOGICAL PRICING ASSURANCE -->
+        <p style="font-size: 13px; color: #1d2740; line-height: 1.6; padding: 12px; background: rgba(5,43,125,0.04); border-radius: 8px; margin-bottom: 24px; text-align: left;">
+        <strong>NO PAYMENT <br> will be collected when placing order.</strong> <br>You will only pay after seeing the final product to be sent in email.
+        </p>
+
+        <button class="btn modal-btn" onclick="closeWelcomeModal()">Start Creating</button>
+    </div>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+/* ==========================================================================
+   1. DESIGN SYSTEM VARIABLES & GLOBAL RESET
+   ========================================================================== */
+:root {
+    --bg: #eef5fd;
+    --primary: #052b7d;
+    --accent: #c4def8;
+    --white: #ffffff;
+    --text: #1d2740;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overscroll-behavior: none; 
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* ==========================================================================
+   2. DESKTOP HEADER & GLOBAL NAVIGATION
+   ========================================================================== */
+nav {
+    background: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(5, 43, 125, .08);
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    position: relative;
+}
+
+.logo { 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.logo img { 
+    width: 80px; 
+    height: auto; 
+    display: block; 
+}
+
+.menu { 
+    display: flex; 
+    gap: 40px; 
+}
+
+.menu a { 
+    text-decoration: none; 
+    color: var(--primary); 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    font-size: 13px; 
+}
+
+.btn {
+    background: var(--primary);
+    color: var(--white);
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover { 
+    transform: translateY(-2px); 
+}
+
+.menu-toggle { display: none; }
+.hamburger { display: none; font-size: 24px; cursor: pointer; color: var(--primary); order: 2; align-items: center; gap: 8px; font-weight: 600; }
+.hamburger span { font-size: 13px; font-family: 'Montserrat', sans-serif; letter-spacing: 1px; }
+
+/* ==========================================================================
+   3. THE MAIN PRODUCT CANVAS (POLAROID SECTION)
+   ========================================================================== */
+/* =========================
+   POLAROIDS
+========================= */
+
+
+/* --- 1. CORE ATMOSPHERE --- */
+   
+        /* --- 2. BOTTOM CART STRIP --- */
+        #cart-banner {
+            position: fixed;
+            bottom: 20px; left: 5%; width: 90%;
+            background: #052b7d; color: white;
+            padding: 12px 25px; border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            z-index: 9000;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            transform: translateY(150%); /* Hidden by default */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #cart-banner.visible { transform: translateY(0); }
+        
+        .checkout-btn {
+            background: #fff; color: #052b7d; border: none;
+            padding: 10px 24px; border-radius: 20px;
+            font-weight: 700; font-size: 13px; cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .checkout-btn:active { transform: scale(0.95); }
+
+        /* --- 3. THE POLAROID (Physical Object) --- */
+        .polaroid {
+            position: absolute;
+            background: white;
+            padding: 12px 12px 0 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: fit-content;
+            display: flex; flex-direction: column;
+            transform-origin: center center;
+            user-select: none;
+            will-change: transform;
+            cursor: grab;
+            border-radius: 2px;
+        }
+        .polaroid:active { cursor: grabbing; }
+
+        /* High-Res Image Container */
+        .polaroid img {
+            display: block; pointer-events: none;
+            border: 1px solid #f0f0f0;
+            max-width: 280px; max-height: 380px; /* Bounding Box */
+            width: auto; height: auto;
+            background: #eee;
+        }
+
+        /* The "Chin" (Text Area) */
+        .caption {
+            padding: 18px 5px 20px 5px;
+            text-align: center;
+            min-width: 150px;
+        }
+        .caption h3 {
+            margin: 0 0 5px 0; font-size: 18px; color: #052b7d;
+            font-weight: normal; letter-spacing: 0.5px;
+        }
+        .customize-btn {
+            background: transparent;
+            border: 1px solid #052b7d; color: #052b7d;
+            padding: 6px 16px; margin-top: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 10px; letter-spacing: 1px; font-weight: bold;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .customize-btn:hover { background: #052b7d; color: #fff; }
+
+        /* --- 4. CONFIGURATOR MODAL (Overlay) --- */
+        #order-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(255,255,255,0.85); /* Milky glass effect */
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #order-overlay.open { opacity: 1; pointer-events: auto; }
+
+        .config-card {
+            background: #fff; width: 90%; max-width: 420px;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            overflow: hidden; display: flex; flex-direction: column;
+            max-height: 85vh; font-family: 'Segoe UI', sans-serif;
+            border: 1px solid #eee;
+        }
+
+        /* Modal Header */
+.config-header h2, 
+.config-header h3, 
+.config-header div {
+    color: #052b7d;
+}
+        .config-header {
+            padding: 20px; background: #fafafa; border-bottom: 1px solid #eee;
+            display: flex; align-items: center; gap: 15px; position: relative;
+        }
+        .close-x {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 28px; cursor: pointer; color: #052b7d; line-height: 20px;
+        }
+        .thumb-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #ccc; }
+        
+        /* Modal Body */
+        .config-body { padding: 25px; overflow-y: auto; }
+        .section-title {
+            font-size: 11px; font-weight: 800; color: #052b7d; 
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 12px; display: block;
+        }
+
+        /* Price Tiers */
+        .tier-grid { display: flex; gap: 10px; margin-bottom: 25px; }
+        .tier-card {
+            flex: 1; border: 1px solid #ddd; padding: 12px 5px;
+            text-align: center; border-radius: 6px; cursor: pointer;
+            transition: 0.2s;
+        }
+        .tier-card.selected { border-color: #c4def8; background: #c4def8; }
+        .tier-name { display: block; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #052b7d; }
+        .tier-price { font-size: 13px; color: #052b7d; }
+
+        /* Upload Rows */
+        .upload-row {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #f8f8f8; padding: 10px 15px;
+            margin-bottom: 8px; border-radius: 6px; border: 1px solid #eee;
+        }
+        .upload-label { font-size: 13px; font-weight: 500; }
+        .file-btn {
+            font-size: 11px; padding: 6px 12px; background: #fff;
+            border: 1px solid #ccc; border-radius: 4px; cursor: pointer;
+        }
+        .file-btn.done { background: #052b7d; border-color: #052b7d; color: #052b7d; }
+
+        /* Modal Footer */
+        .config-footer { padding: 15px 25px; border-top: 1px solid #eee; }
+        .add-cart-btn {
+            width: 100%; background: #052b7d; color: #fff; padding: 15px;
+            border: none; border-radius: 6px; font-weight: bold;
+            font-size: 14px; cursor: pointer;
+        }
+        
+        /* --- SMART UPLOAD STYLES --- */
+.file-list {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 8px; margin-bottom: 15px;
+}
+
+.file-chip {
+    background: #fff; border: 1px solid #ddd;
+    padding: 6px 10px; border-radius: 4px;
+    font-size: 11px; color: #555;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.file-chip span {
+    max-width: 150px; overflow: hidden; 
+    text-overflow: ellipsis; white-space: nowrap;
+}
+
+.delete-file {
+    color: #ff4757; font-weight: bold; cursor: pointer;
+    background: rgba(255, 71, 87, 0.1);
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 0; font-size: 14px;
+}
+
+.delete-file:hover { background: #ff4757; color: white; }
+
+/* --- DYNAMIC ADD BUTTON --- */
+.add-member-btn {
+    width: 100%;
+    padding: 10px;
+    border: 2px dashed #052b7d;
+    background: #fafafa;
+    color: #666;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+}
+.add-member-btn:hover {
+    border-color: #052b7d;
+    color: #052b7d;
+    background: #fff;
+}
+
+
+/* ==========================================================================
+   5. DESKTOP FOOTER ARCHITECTURE
+   ========================================================================== */
+footer { 
+    background: var(--white); 
+    margin-top: 0px; 
+    border-top: 1px solid rgba(5,43,125,.08); 
+}
+
+.footer-grid { 
+    display: grid; 
+    grid-template-columns: 2fr 1fr 1fr 1fr; 
+    gap: 40px; 
+    padding: 60px 0; 
+}
+
+.footer-title { 
+    color: var(--primary); 
+    margin-bottom: 15px; 
+    font-weight: 600; 
+}
+
+footer ul { list-style: none; }
+footer li { margin-bottom: 10px; }
+footer a { text-decoration: none; color: #4c5d7a; }
+
+.copyright { 
+    text-align: center; 
+    padding: 20px; 
+    border-top: 1px solid rgba(5,43,125,.08); 
+}
+
+/* =========================
+   CUSTOM POPUP MODAL
+========================= */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(29, 39, 64, 0.4); /* Uses your --text color with transparency */
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 24px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(5, 43, 125, 0.15);
+    border: 1px solid rgba(5, 43, 125, 0.05);
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.modal-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.modal-card p {
+    color: #52627f;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 28px;
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 14px;
+}
+
+
+/* ==========================================================================
+   6. RESPONSIVE MEDIA QUERIES (MOBILE BREAKPOINTS)
+   ========================================================================== */
+@media screen and (max-width: 992px) {
+    .hamburger { 
+        display: flex; 
+    }
+    .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        padding: 30px 20px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+        gap: 25px;
+        text-align: center;
+        border-top: 1px solid rgba(5,43,125,.05);
+    }
+    .menu-toggle:checked ~ .menu { display: flex; }
+    .nav-btn { padding: 10px 18px; font-size: 13px; }
+}
+
+.polaroid-section {
+    background: var(--white);
+    width: 100%;
+    min-height: 650px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2px 2px;
+    overflow: hidden; /* Locks header & prevents horizontal page shaking */
+}
+
+#gallery-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    position: relative; /* Isolated absolute drag coordinate system */
+    
+    /* --- THE FIX: Hard-lock the container size from warping --- */
+    height: 80vh;       /* Uses 80% of the active device viewport screen height */
+    max-height: 800px;  /* Stops it from scaling up excessively on huge monitors */
+    overflow: hidden;   /* Cuts off clipping assets cleanly at the desk borders */
+    
+    /* Desk dot matrix grid canvas texture styling */
+    background-color: var(--white);
+    background-image: radial-gradient(#d0d4e0 1px, transparent 1px);
+    background-size: 20px 20px;
+    
+    /* Kills generic mobile layout gesture page dragging */
+    touch-action: none; 
+}
+
+
+/* ==========================================================================
+   PRODUCTION CLEAN-SLATE MOBILE RESPONSIVE OVERRIDES
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+
+    /* --- GLOBAL COMPONENT INNER GAPS --- */
+    .nav-wrapper, 
+    .copyright {
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+
+    /* --- THE DESK CANVAS SURFACE --- */
+    #gallery-container {
+        width: 100%;
+        max-width: 700px;
+        margin: auto;
+        position: relative; /* Isolates absolute drag math from the page body */
+        min-height: 600px;  /* Gives a dedicated workspace surface area */
+        touch-action: none; 
+    } /* <--- FIXED: Added this closing brace here! */
+
+    #modal-email-field,
+#customer-email {
+    font-size: 16px !important;
+}
+
+    /* --- THE PRODUCT CANVAS (POLAROID AREA) --- */
+    .polaroid-container {
+        height: 1000px; 
+        min-height: 400px; 
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+
+    .polaroid img {
+        max-width: 240px;
+        max-height: 320px;
+    }
+
+    /* --- FLOATING BOTTOM CART STRIP --- */
+    #cart-banner {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px;
+        text-align: center;
+        bottom: 15px;
+    }
+
+    .checkout-btn { 
+        width: 100%; 
+    }
+
+    /* --- PRODUCT CONFIGURE POPUP MODAL --- */
+    .config-card { 
+        width: 95%; 
+        max-height: 90vh; 
+    }
+
+    .tier-grid { 
+        flex-direction: column; 
+        gap: 8px; 
+    }
+
+    .upload-row { 
+        flex-direction: column; 
+        gap: 10px; 
+        align-items: flex-start; 
+    }
+
+    .file-btn { 
+        width: 100%; 
+        text-align: center; 
+    }
+
+    /* --- BRAND FOOTER STRUCTURAL STACK --- */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 40px 20px;
+        box-sizing: border-box;
+    }
+}
