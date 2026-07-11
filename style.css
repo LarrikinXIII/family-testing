@@ -548,6 +548,11 @@ footer a { text-decoration: none; color: #4c5d7a; }
         max-height: 320px;
     }
 
+    .category-tabs-container {
+    gap: 2px;
+    margin: 0 auto auto auto;
+    }
+
     /* --- FLOATING BOTTOM CART STRIP --- */
       #cart-wrapper.visible {
         height: auto; /* Gives extra sliding height space when inputs stack on mobile */
