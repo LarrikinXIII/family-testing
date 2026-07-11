@@ -111,13 +111,16 @@ nav {
     background: #052b7d; 
     color: white;
     padding: 12px 25px; 
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 10px 25px rgba(5,43,125,0.12);
-    z-index: 9000;
-    
-    /* --- CRITICAL ORIGINAL FORCED INVISIBILITY GATE --- */
-    display: none !important; /* Forces it to be absolutely invisible on page load */
+    z-index: 50; /* Keeps layer level low so mobile drawer nav slides over it */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    box-sizing: border-box;
 }
+
 
 /* --- THE REVEAL CLASS FORCED BY ADD_TO_CART JAVASCRIPT --- */
 #cart-banner.visible { 
@@ -426,6 +429,24 @@ footer a { text-decoration: none; color: #4c5d7a; }
     box-shadow: 0 4px 12px rgba(5, 43, 125, 0.08); /* Lifted look */
 }
 
+
+#cart-wrapper {
+    width: 100%;
+    height: 0;          /* Completely collapsed on page load */
+    opacity: 0;         /* Invisible by default */
+    overflow: hidden;   /* Cuts off the inner banner structure while sliding */
+    transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 0.3s ease, 
+                margin 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- THE REVEAL STATE ACTIVATED BY THE CART VISIBLE CLASS --- */
+#cart-wrapper.visible {
+    height: 60px;       /* Expands smoothly to match the inner capsule size */
+    opacity: 1;         /* Fades in beautifully */
+    margin-bottom: 20px; /* Pushes the categories down cleanly */
+}
+
 /* ==========================================================================
    6. RESPONSIVE MEDIA QUERIES (MOBILE BREAKPOINTS)
    ========================================================================== */
@@ -528,13 +549,14 @@ footer a { text-decoration: none; color: #4c5d7a; }
     }
 
     /* --- FLOATING BOTTOM CART STRIP --- */
+      #cart-wrapper.visible {
+        height: 120px; /* Gives extra sliding height space when inputs stack on mobile */
+    }
     #cart-banner {
-        flex-direction: column;
+        flex-direction: row;
         gap: 12px;
-        padding: 5px;
+        padding: 15px;
         text-align: center;
-        bottom: 15px;
-        z-index: 50;
     }
 
     .checkout-btn { 

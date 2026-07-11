@@ -382,7 +382,7 @@ document
         const total = cart.reduce((sum, i) => sum + i.price, 0);
         document.getElementById('cart-total').innerText = "₱" + total;
         document.getElementById('cart-count').innerText = cart.length;
-        document.getElementById('cart-banner').classList.add('visible');
+       document.getElementById('cart-wrapper').classList.add('visible');
         closeModal();
     }
 

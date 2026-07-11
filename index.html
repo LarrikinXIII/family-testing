@@ -40,14 +40,10 @@
 <!-- MAIN CONTENT AREA -->
 <main class="container">
     <!-- This is your new placeholder section -->
-    <div class="polaroid-section">
-        <div class="category-tabs-container">
-    <button type="button" class="category-tab active" onclick="filterCategory('all', this)">ALL</button>
-    <button type="button" class="category-tab" onclick="filterCategory('family', this)">FAMILY</button>
-    <button type="button" class="category-tab" onclick="filterCategory('couple', this)">COUPLE</button>
-    <button type="button" class="category-tab" onclick="filterCategory('solo', this)">SOLO</button>
-</div>
-<!-- 1. CART UI (COMPACT & BACKEND-SAFE VERSION) -->
+
+    <!-- 1. CART UI (COMPACT & BACKEND-SAFE VERSION) -->
+
+<div id="cart-wrapper">
 <div id="cart-banner">
     <div style="line-height:1.2">
         <span style="font-size:11px; opacity:0.7; letter-spacing:1px">ESTIMATED TOTAL</span><br>
@@ -72,6 +68,16 @@
             Confirm Order (<span id="cart-count">0</span>)
         </button>
     </div>
+</div>
+</div>
+
+
+    <div class="polaroid-section">
+        <div class="category-tabs-container">
+    <button type="button" class="category-tab active" onclick="filterCategory('all', this)">ALL</button>
+    <button type="button" class="category-tab" onclick="filterCategory('family', this)">FAMILY</button>
+    <button type="button" class="category-tab" onclick="filterCategory('couple', this)">COUPLE</button>
+    <button type="button" class="category-tab" onclick="filterCategory('solo', this)">SOLO</button>
 </div>
 
 <!-- EMAIL INPUT CAPTURE POPUP MODAL (Keeps zoom isolated inside this frame card) -->
